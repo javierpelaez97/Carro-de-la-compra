@@ -1,8 +1,8 @@
 
 
-export default function Guitar({guitar, addToCart}){
+export default function Guitar({guitar, addToCart}){                        //Trae el objeto guitar y la funcion addToCart
 
-    const {id, name, image, description, price} = guitar
+    const {id, name, image, description, price} = guitar                                            
 
     
 
