@@ -7,11 +7,20 @@ import {db} from './data/db'
 
 function App() {
 
-  const [data, setData] = useState(db)
+  const initialCart = () => {
+    const localStorageCart = localStorage.getItem('cart')
+    return localStorageCart ? JSON.parse(localStorageCart): []                  //Primero va a buscar si tiene algo si no lo tiene va a abrir un array vacío
+  }
 
-  const [cart, setCart] = useState([])
+  const [data] = useState(db)
+
+  const [cart, setCart] = useState(initialCart)
 
   const MAX_ITEMS = 5
+
+  useEffect(() => {                                                             //Sirve para ejecutar siempre sin necesidad de entrar en esa funcion ni ejecutarla
+    localStorage.setItem('cart', JSON.stringify(cart))
+  },[cart])
 
   function addToCart(item) {                                                    //Función para añadir los objetos del Db al carro
 
@@ -24,7 +33,7 @@ function App() {
         item.quantity = 1                                                       //Para que añada un nuevoelemento al objeto llamado cantidad, asi podremos saber cuantos hay
         setCart ([...cart, item])                                               //Cojemos todos los elementos que tenemos en cart y le añadimos el item nuevo        
       }
-     saveLocalStorage()
+     
   }
 
   function removeFromCart(id){
@@ -61,11 +70,7 @@ function App() {
     setCart([])
   }
   
-  function saveLocalStorage(){
-    localStorage.setItem('cart', JSON.stringify(cart))
-
-    
-  }
+ 
   
   
   return (
